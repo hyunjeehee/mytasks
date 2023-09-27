@@ -4,8 +4,7 @@ from pydantic import BaseModel, validator #pydantic을 이용하면 type annotat
 class InquiryCreate(BaseModel):
     content: str
     password: str
-    create_time: datetime
-
+    
     @validator('content')
     def not_empty(cls, v):
         if not v.strip():
@@ -18,7 +17,7 @@ class InquiryCheck(BaseModel):
 
 class InquiryUpdate(BaseModel):
     content: str
-    password: str
+    #password: str
     update_time: datetime
 
     class Config:

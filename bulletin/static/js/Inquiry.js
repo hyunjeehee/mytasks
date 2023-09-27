@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () { //("이벤트 타입", 실행할 함수)
+    //var 변수 재선언 가능, let 변수 재선언 불가능, 재할당 가능, const 재선언 불가능, 재할당 불가능
     const inquiryForm = document.getElementById("inquiry-form"); // 문의 작성 양식
     const messageDiv = document.getElementById("message"); // 결과 메시지를 표시할 div
 
@@ -11,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // 문의 작성을 위한 AJAX 요청 수행
         fetch("/newinquiry/", {
-            method: "POST", 
+            method: "POST",
             headers: {
                 "Content-Type": "application/json", 
             },
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((response) => response.json()) // 응답을 JSON 형식으로 파싱
             .then((data) => {
                 if ("inquiry_id" in data) {
-                    messageDiv.innerHTML = `문의글 작성 완료. ID: ${data.inquiry_id}`;
+                    messageDiv.innerHTML = `문의글 작성 완료. <br>ID: ${data.inquiry_id}`;
                     // 작성된 문의의 ID를 표시
                 } else {
                     messageDiv.innerHTML = "문의 작성에 실패";
