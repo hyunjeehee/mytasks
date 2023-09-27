@@ -11,7 +11,7 @@ class Inquiry(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     content = Column(VARCHAR(100), nullable=False)
     password = Column(VARCHAR(10), nullable=False)
-    create_time = Column(DateTime, server_default=func.now())
+    create_time = Column(DateTime, server_default=func.now(), onupdate=func.now())
     update_time = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
 
