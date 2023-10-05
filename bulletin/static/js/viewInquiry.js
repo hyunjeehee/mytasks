@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () { 
+document.addEventListener("DOMContentLoaded", function () {
     const viewInquiryForm = document.getElementById("view-inquiry-form");
     const messageDiv = document.getElementById("message");
     const mod_btn = document.getElementById("mod-btn"); 

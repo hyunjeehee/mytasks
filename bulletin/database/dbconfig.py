@@ -22,7 +22,7 @@ from sqlalchemy.orm import sessionmaker
 SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:jh991218**@localhost:3306/inquiry"
 
 #엔진을 만듦; 커넥션 풀 생성(DB에 접속하는 객체를 일정 개수만큼 만들어놓고 돌려가며 사용)
-#   커넥션 풀은 DB에 접속하는 세션 수를 제어하고 세션 접속에 소요되는 시간을 줄이고자하는 용도로 사용
+#   ->커넥션 풀은 DB에 접속하는 세션 수를 제어하고 세션 접속에 소요되는 시간을 줄이고자하는 용도로 사용
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread" : False}
 )

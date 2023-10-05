@@ -18,11 +18,11 @@ engine = create_engine(DB_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 #app = FastAPI()         #인스턴스 생성
-
 app = FastAPI( 
     title='bulletin board', description='inquiries', openapi_url='/api/openapi.json'
     )
 app.mount("/static", StaticFiles(directory="static"),name="static")
+
 templates = Jinja2Templates(directory="templates")
 
 

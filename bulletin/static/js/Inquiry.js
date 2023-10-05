@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", function () { //("이벤트 타입
     const messageDiv = document.getElementById("message"); // 결과 메시지를 표시할 div
 
     inquiryForm.addEventListener("submit", function (e) {
-        e.preventDefault(); // 폼 제출을 방지하여 페이지 새로고침 방지
+        // 폼 제출을 방지하여 페이지 새로고침 방지: form 안에 submit 버튼을 눌렀어도 새로 실행하는 걸 원치 않는 경우(submit은 작동됨)
+        e.preventDefault(); 
+
         const formData = new FormData(inquiryForm); // 폼 데이터 가져오기
 
         const content = formData.get("content"); // 문의 내용 가져오기
@@ -24,7 +26,9 @@ document.addEventListener("DOMContentLoaded", function () { //("이벤트 타입
             .then((response) => response.json()) // 응답을 JSON 형식으로 파싱
             .then((data) => {
                 if ("inquiry_id" in data) {
+                    //console.log('문의글 작성 완료')
                     messageDiv.innerHTML = `문의글 작성 완료. <br>ID: ${data.inquiry_id}`;
+                    messageDiv.hidden = false
                     // 작성된 문의의 ID를 표시
                 } else {
                     messageDiv.innerHTML = "문의 작성에 실패";

@@ -15,3 +15,4 @@ class Inquiry(Base):
     update_time = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
 
+#sqlalchemy는 모델 기반으로 데이터를 처리하기 때문에 모델 클래스를 정의하는 파일 필요
