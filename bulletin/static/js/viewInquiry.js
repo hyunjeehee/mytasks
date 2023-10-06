@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
+
+    // 수정 기능 구현
     mod_btn.addEventListener('click', function(e) {
         console.log('수정버튼');
         e.preventDefault();     // 폼 제출을 방지하여 페이지 새로고침 방지
@@ -67,8 +69,41 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         
     });
-});
+
+    //문의글 목록 보여주기
+    fetch(`/getinquiry/`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.length === 0) {
+            let listTbody = `<tr><td colspan="5">등록된 문의글이 없습니다.</td></tr>`;
+            $('#listTbody').html(listTbody);
+            $('#Result').show();
+        } else {
+            //console.log(typeof data);
+
+            let listTbody = '';
+            //console.log(typeof listTbody);
     
+            data.forEach((data) => {
+                listTbody += `<tr>
+                                <td>${data.id}</td>
+                                <td>${data.content}</td>
+                                <td>${data.password}</td>
+                                <td>${data.create_time}</td>
+                                <td>${data.update_time}</td>
+                             </tr>`;
+            });
+
+            $('#listTbody').html(listTbody);
+
+        }
+    });
+})
             // .catch((error) => {
             //     console.error("오류:",error);
             //     messageDiv.innerHTML = "조회 시도 중 오류가 발생했습니다.";

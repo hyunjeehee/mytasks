@@ -1,4 +1,4 @@
-#!/Users/jiheehyun/Documents/bulletin/venv/bin/python3.11
+#!/Users/jiheehyun/Desktop/mytasks/bulletin/venv/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys
