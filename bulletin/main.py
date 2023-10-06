@@ -89,3 +89,10 @@ def mod_inquiry(
     db.commit()
 
     return {"message": "문의글이 수정되었습니다.", "inquiry_id": db_inquiry.id}
+
+@app.get("/getinquiry/")
+def show_inquiry(db: SessionLocal = Depends(get_db)):
+    
+    db_inquiry = db.query(Inquiry).all()
+
+    return db_inquiry
