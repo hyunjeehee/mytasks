@@ -90,9 +90,21 @@ def mod_inquiry(
 
     return {"message": "문의글이 수정되었습니다.", "inquiry_id": db_inquiry.id}
 
+
+## 문의글 목록 가져오는 것
 @app.get("/getinquiry/")
 def show_inquiry(db: SessionLocal = Depends(get_db)):
     
     db_inquiry = db.query(Inquiry).all()
 
     return db_inquiry
+
+
+## 삭제기능
+@app.delete("/deleteinquiry/{inquiry_id}")
+def del_inquiry(inquiry_id: int, db: SessionLocal = Depends(get_db)):
+    
+    db.query(Inquiry).filter(Inquiry.id == inquiry_id).delete()
+    db.commit()
+    
+    return inquiry_id
