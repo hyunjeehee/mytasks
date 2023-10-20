@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
     });
 
-    fetch(`/allinquiries/`, {
+    fetch(`/inquiry`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -91,7 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <td><button class='delete_btn' type="button" name='${item.id}'>삭제</button></td>
                              </tr>`;
             });
-
 
             $('#listTbody').html(listTbody);
             
