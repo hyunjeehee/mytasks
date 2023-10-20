@@ -4,13 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const mod_btn = document.getElementById("mod-btn");
 
 
-    // 조회
     viewInquiryForm.addEventListener("submit", function (e) {
         e.preventDefault();
         const inquiry_id = document.getElementById("inquiry-id").value;
         const password = document.getElementById("view-password").value;
 
-        fetch(`/viewinquiry?inquiry_id=${inquiry_id}&password=${password}`, {
+        fetch(`/inquiry?inquiry_id=${inquiry_id}&password=${password}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((response) => response.json())
             .then((data) => {
                 if ("content" in data) {
-                    // messageDiv.innerHTML = `조회 성공`;
                     messageDiv.querySelector('input').value = data.content;
                     messageDiv.hidden = false
                 }
@@ -32,17 +30,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    // 수정
     mod_btn.addEventListener('click', function(e) {
         console.log('수정버튼');
-        e.preventDefault();     // 폼 제출을 방지하여 페이지 새로고침 방지
+        e.preventDefault();     
         const newContent = messageDiv.querySelector('input').value;
         console.log(newContent)
         const inquiryId = document.getElementById("inquiry-id").value;
         console.log(inquiryId)
     
-        // inquiryId를 기반으로 문의를 업데이트하기 위한 AJAX 요청 수행
-        fetch(`/modinquiry/${inquiryId}`, { //fetch는 js에서 서버로 네트워크 요청을 보내고 응답을 받을 수 있게하는 메서드
+        fetch(`/inquiry/${inquiryId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -52,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 update_time: new Date().toISOString(),
             }),
         })
-            .then((response) => response.json())    // 응답을 JSON형식으로 parsing
+            .then((response) => response.json()) 
             .then((data) => {
 
                 //if (data.content in data) {
@@ -69,8 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
     });
 
-    //문의글 목록 보여주기
-    fetch(`/getinquiry/`, {
+    fetch(`/allinquiries/`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -83,10 +78,8 @@ document.addEventListener("DOMContentLoaded", function () {
             $('#listTbody').html(listTbody);
             $('#Result').show();
         } else {
-            //console.log(typeof data);
 
             let listTbody = '';
-            //console.log(typeof listTbody);
 
             data.forEach((item) => {
                 listTbody += `<tr>
@@ -104,17 +97,16 @@ document.addEventListener("DOMContentLoaded", function () {
             
 
             
-            // 삭제
             const delete_btn = document.querySelectorAll('.delete_btn');
             delete_btn.forEach((btn) =>{
                 btn.addEventListener('click', function (e) {
                     e.preventDefault();
                     
-                    // var inquiryId = document.getElementById("");
+                    // var inquiryId = document.getElementById(""); 안되는 이유
                     console.log('삭제 버튼');
                     console.log(this.name);
                 
-                    fetch(`/deleteinquiry/${this.name}`, {
+                    fetch(`/inquiry/${this.name}`, {
                         method: 'DELETE',
                         headers: {
                             "Content-Type": "application/json",
