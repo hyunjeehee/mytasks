@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const content = formData.get("content"); 
         const password = formData.get("password"); 
 
-        fetch("/newinquiry/", {
+        fetch("/inquiry", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json", 
