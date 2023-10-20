@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메인 페이지</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
     <script src="../static/js/Inquiry.js"></script>
     <script src="../static/js/viewInquiry.js"></script>
     <link rel="icon" href="data:,">
+    <title>메인 페이지</title>
 </head>
 
 <body>
     <h1>메인 페이지</h1>
-
-    <!-- 문의 작성 폼 -->
     <h2>문의 작성</h2>
     <form id="inquiry-form">
         <label for="content">내용:</label>
@@ -24,7 +23,6 @@
         <button type="submit">문의글 작성</button>
     </form>
 
-    <!-- 문의 조회 -->
     <h2>문의 조회</h2>
     <form id="view-inquiry-form">
         <label for="inquiry-id">문의 ID:</label>
@@ -34,7 +32,7 @@
         <button type="submit">조회</button>
     </form>
 
-    <div id="message" hidden>
+    <div id="message" >
         문의내용: <input type="text">
         <button type="submit" id="mod-btn">수정</button>
     </div>
@@ -55,12 +53,11 @@
                     <th>ID</th>
                     <th>CONTENT</th>
                     <th>PASSWORD</th>
-                    <th>GENERATION_TIME</th>
+                    <th>CREATION_TIME</th>
                     <th>UPDATED_TIME</th>
                     <th></th>
                 </tr>
             </thead>
-            <!-- 가져오는 코드 -->
             <tbody id="listTbody"></tbody>
         </table>
     </div>
