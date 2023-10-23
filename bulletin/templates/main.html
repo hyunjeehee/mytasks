@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
-    <script src="../static/js/Inquiry.js"></script>
-    <script src="../static/js/viewInquiry.js"></script>
+    <script src="{{ url_for('static', path='js/Inquiry.js')}}"></script>
+    <script src="{{ url_for('static', path='js/viewInquiry.js')}}"></script>
+    <link href="static/css/main.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="data:,">
     <title>메인 페이지</title>
 </head>
@@ -15,7 +16,7 @@
 <body>
     <h1>메인 페이지</h1>
     <h2>문의 작성</h2>
-    <form id="inquiry-form">
+    <form id="inquiryForm">
         <label for="content">내용:</label>
         <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>
         <label for="password">비밀번호:</label>
@@ -24,11 +25,11 @@
     </form>
 
     <h2>문의 조회</h2>
-    <form id="view-inquiry-form">
-        <label for="inquiry-id">문의 ID:</label>
-        <input type="text" id="inquiry-id" name="inquiry-id" required>
-        <label for="view-password">비밀번호:</label>
-        <input type="password" id="view-password" name="view-password" required>
+    <form id="viewinquiryForm">
+        <label for="inquiryId">문의 ID:</label>
+        <input type="text" id="inquiryId" name="inquiry-id" required>
+        <label for="viewPassword">비밀번호:</label>
+        <input type="password" id="viewPassword" name="view-password" required>
         <button type="submit">조회</button>
     </form>
 
@@ -39,7 +40,7 @@
     
     <div style="margin-top: 50px;" id="Result" class="table-section">
         여기에 db 리스트 전체 다 가지고 와주세요<p></p>
-        <table id="wholeList" class="whole-table">
+        <table id="wholeList" class="whole-table"> 
             <colgroup>
                 <col style="width: 50px;">
                 <col style="width: 200px">
@@ -49,7 +50,7 @@
                 <col style="width: 50px;">
             </colgroup>
             <thead>
-                <tr align="left" style='font-weight: bold';>
+                <tr>
                     <th>ID</th>
                     <th>CONTENT</th>
                     <th>PASSWORD</th>
