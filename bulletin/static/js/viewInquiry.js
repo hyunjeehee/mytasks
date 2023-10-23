@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () { 
-    const viewInquiryForm = document.getElementById("view-inquiry-form");
+    const viewInquiryForm = document.getElementById("viewinquiryForm");
     const messageDiv = document.getElementById("message");
     const mod_btn = document.getElementById("mod-btn");
 
 
     viewInquiryForm.addEventListener("submit", function (e) {
         e.preventDefault();
-        const inquiry_id = document.getElementById("inquiry-id").value;
-        const password = document.getElementById("view-password").value;
+        const inquiry_id = document.getElementById("inquiryId").value;
+        const password = document.getElementById("viewPassword").value;
 
         fetch(`/inquiry?inquiry_id=${inquiry_id}&password=${password}`, {
             method: "GET",
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();     
         const newContent = messageDiv.querySelector('input').value;
         console.log(newContent)
-        const inquiryId = document.getElementById("inquiry-id").value;
+        const inquiryId = document.getElementById("inquiryId").value;
         console.log(inquiryId)
     
         fetch(`/inquiry/${inquiryId}`, {
@@ -50,14 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then((response) => response.json()) 
             .then((data) => {
-
-                //if (data.content in data) {
-                   // messageDiv.innerHTML = "수정 성공";
                     messageDiv.innerHTML = `문의 내용: '${newContent}'`;
-                    //console.log(data.content)
-                //} else {
-                 //   messageDiv.innerHTML = "수정 실패";
-                //}
             })
             .catch((error) => {
                 console.error("Fetch operation error:", error);
@@ -81,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let listTbody = '';
 
-            data.forEach((item) => {
+            for (let item of data){
                 listTbody += `<tr>
                                 <td>${item.id}</td>
                                 <td>${item.content}</td>
@@ -90,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <td>${item.update_time}</td>
                                 <td><button class='delete_btn' type="button" name='${item.id}'>삭제</button></td>
                              </tr>`;
-            });
+            }
 
             $('#listTbody').html(listTbody);
             

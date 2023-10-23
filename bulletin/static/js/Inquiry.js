@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () { 
-    const inquiryForm = document.getElementById("inquiry-form"); 
+    const inquiryForm = document.getElementById("inquiryForm"); 
     const messageDiv = document.getElementById("message");
 
 
-    inquiryForm.addEventListener("submit", function (e) {
-        e.preventDefault(); 
+    inquiryForm.addEventListener("submit", userSubmitHandler); 
+
+    function userSubmitHandler(event) {
+        event.preventDefault(); 
         const formData = new FormData(inquiryForm); 
 
         const content = formData.get("content"); 
@@ -22,15 +24,19 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then((response) => response.json())
             .then((data) => {
-                if ("inquiry_id" in data) {
-                    messageDiv.innerHTML = `문의글 작성 완료. <br>ID: ${data.inquiry_id}`;
-                } else {
-                    messageDiv.innerHTML = "문의 작성에 실패";
-                }
+                errorLog(data)
             })
             .catch((error) => {
                 console.error("오류:", error);
                 messageDiv.innerHTML = "문의 작성 중 오류가 발생했습니다.";
             });
-    });
+    }
+
+    function errorLog(data) {
+        if ("inquiry_id" in data) { 
+            messageDiv.innerHTML = `문의글 작성 완료. <br>ID: ${data.inquiry_id}`;
+        } else {
+            messageDiv.innerHTML = "문의 작성에 실패";
+        }
+    }
 });
