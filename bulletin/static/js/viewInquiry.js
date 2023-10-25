@@ -94,7 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
             btn.addEventListener('click', function (e) {
                 e.preventDefault();
                 
-                // var inquiryId = document.getElementById(""); 안되는 이유
                 console.log('삭제 버튼');
                 console.log(this.name);
             
