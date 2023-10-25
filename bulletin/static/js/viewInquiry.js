@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
             $('#listTbody').html(listTbody);
             $('#Result').show();
         }
-//else 넣으면 왜 안되지..?
+        
         let listTbody = data.map((item) => {
             return `<tr>
                 <td>${item.id}</td>
@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td>${item.update_time}</td>
                 <td><button class='delete_btn' type="button" name='${item.id}'>삭제</button></td>
             </tr>`;
+          
         });
                 
         console.log(listTbody);
