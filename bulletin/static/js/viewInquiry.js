@@ -3,9 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const messageDiv = document.getElementById("message");
     const mod_btn = document.getElementById("mod-btn");
 
+    viewInquiryForm.addEventListener("submit", checkSubmitHandler);
 
-    viewInquiryForm.addEventListener("submit", function (e) {
-        e.preventDefault();
+    function checkSubmitHandler(event){
+        event.preventDefault();
         const inquiry_id = document.getElementById("inquiryId").value;
         const password = document.getElementById("viewPassword").value;
 
@@ -17,22 +18,29 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then((response) => response.json())
             .then((data) => {
-                if ("content" in data) {
-                    messageDiv.querySelector('input').value = data.content;
-                    messageDiv.hidden = false
-                }
-                else{
-                    messageDiv.innerHTML = "비밀번호 오류";
-                }
+                checkerrorLog(data)
             })
             .catch((error) => {
+                console.error("오류:", error);
             });
-    });
+    }
 
+    function checkerrorLog(data) {
+        if ("content" in data) {
+            messageDiv.querySelector('input').value = data.content;
+            messageDiv.hidden = false
+        }
+        else{
+            messageDiv.innerHTML = "비밀번호 오류";
+        }
+    }
+    
 
-    mod_btn.addEventListener('click', function(e) {
+    mod_btn.addEventListener("click", userClickHandler);
+
+    function userClickHandler(event) {
         console.log('수정버튼');
-        e.preventDefault();     
+        event.preventDefault();     
         const newContent = messageDiv.querySelector('input').value;
         console.log(newContent)
         const inquiryId = document.getElementById("inquiryId").value;
@@ -49,14 +57,15 @@ document.addEventListener("DOMContentLoaded", function () {
             }),
         })
             .then((response) => response.json()) 
-            .then((data) => {
+            .then(() => {
                     messageDiv.innerHTML = `문의 내용: '${newContent}'`;
             })
             .catch((error) => {
                 console.error("Fetch operation error:", error);
             });
-        
-    });
+    }
+    
+    
 
     fetch(`/inquiry`, {
         method: "GET",
@@ -108,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
             
-        });
+    });
          
 });
 
