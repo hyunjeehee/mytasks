@@ -23,20 +23,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }),
         })
             .then((response) => response.json())
-            .then((data) => {
-                errorLog(data)
-            })
-            .catch((error) => {
-                console.error("오류:", error);
-                messageDiv.innerHTML = "문의 작성 중 오류가 발생했습니다.";
-            });
+            .then(successCallback)
+            .catch(errorCallback);
     }
 
-    function errorLog(data) {
+    function successCallback(data) {
         if ("inquiry_id" in data) { 
             messageDiv.innerHTML = `문의글 작성 완료. <br>ID: ${data.inquiry_id}`;
         } else {
             messageDiv.innerHTML = "문의 작성에 실패";
         }
+    }
+
+    function errorCallback(error) {
+        console.error("오류:", error);
+        messageDiv.innerHTML = "문의 작성 중 오류가 발생했습니다.";
     }
 });
