@@ -5,36 +5,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     viewInquiryForm.addEventListener("submit", checkSubmitHandler);
 
-    function checkSubmitHandler(event){
+    function checkSubmitHandler(event) {
         event.preventDefault();
         const inquiry_id = document.getElementById("inquiryId").value;
         const password = document.getElementById("viewPassword").value;
 
-        fetch(`/inquiry?inquiry_id=${inquiry_id}&password=${password}`, {
+        const searchHash = { inquiry_id: inquiry_id, password: password };
+        const searchParams = new URLSearchParams(searchHash).toString();
+        fetch(`/inquiry?${searchParams}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
             }
         })
             .then((response) => response.json())
-            .then((data) => {
-                checkerrorLog(data)
-            })
-            .catch((error) => {
-                console.error("오류:", error);
-            });
+            .then(successLog)
+            .catch(errorLog);
     }
 
-    function checkerrorLog(data) {
-        if ("content" in data) {
-            messageDiv.querySelector('input').value = data.content;
-            messageDiv.hidden = false
-        }
-        else{
-            messageDiv.innerHTML = "비밀번호 오류";
-        }
-    }
-    
 
     mod_btn.addEventListener("click", userClickHandler);
 
@@ -57,14 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }),
         })
             .then((response) => response.json()) 
-            .then(() => {
-                    messageDiv.innerHTML = `문의 내용: '${newContent}'`;
-            })
-            .catch((error) => {
-                console.error("Fetch operation error:", error);
-            });
+            .then(showContent)
+            .catch(fetchError);
     }
-    
     
 
     fetch(`/inquiry`, {
@@ -75,6 +58,53 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then((response) => response.json())
     .then((data) => {
+        getInquiry(data)
+                
+        const delete_btn = document.querySelectorAll('.delete_btn');
+
+        delete_btn.forEach((btn) => {
+            btn.addEventListener("click",userDeleteHandler);
+
+            function userDeleteHandler(event) {
+                event.preventDefault();
+    
+                console.log('삭제 버튼');
+                console.log(this.name);
+    
+                fetch(`/inquiry/${this.name}`, {
+                    method: 'DELETE',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then((response) => response.json())
+                .then(() => location.reload());
+            }
+        })
+    });
+
+    function successLog(data) {
+        if ("content" in data) {
+            messageDiv.querySelector('input').value = data.content;
+            messageDiv.hidden = false
+        } else {
+            messageDiv.innerHTML = "비밀번호 오류";
+        }
+    }
+
+    function errorLog(error) {
+        console.error("오류:", error);
+    }
+
+    function showContent() {
+        messageDiv.innerHTML = `문의 내용: '${newContent}'`;
+    }
+
+    function fetchError() {
+        console.error("오류:", error);
+    }
+    
+    function getInquiry(data) {
         if (data.length === 0) {
             let listTbody = `<tr><td colspan="5">등록된 문의글이 없습니다.</td></tr>`;
             $('#listTbody').html(listTbody);
@@ -96,28 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(listTbody);
 
         $('#listTbody').html(listTbody);
-                
-                
-        const delete_btn = document.querySelectorAll('.delete_btn');
-        delete_btn.forEach((btn) =>{
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                console.log('삭제 버튼');
-                console.log(this.name);
-            
-                fetch(`/inquiry/${this.name}`, {
-                    method: 'DELETE',
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                .then((response) => response.json())
-                .then(() => location.reload());
-            });
-        });
-            
-    });
-         
+    }
 });
 
