@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then((response) => response.json()) 
             .then(showContent)
-            .catch(fetchError);
+            .catch(errorLog);
     }
     
 
@@ -58,29 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then((response) => response.json())
     .then((data) => {
+        
         getInquiry(data)
-                
-        const delete_btn = document.querySelectorAll('.delete_btn');
-
-        delete_btn.forEach((btn) => {
-            btn.addEventListener("click",userDeleteHandler);
-
-            function userDeleteHandler(event) {
-                event.preventDefault();
-    
-                console.log('삭제 버튼');
-                console.log(this.name);
-    
-                fetch(`/inquiry/${this.name}`, {
-                    method: 'DELETE',
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                .then((response) => response.json())
-                .then(() => location.reload());
-            }
-        })
+        delInquiry()
     });
 
     function successLog(data) {
@@ -100,9 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
         messageDiv.innerHTML = `문의 내용: '${newContent}'`;
     }
 
-    function fetchError() {
-        console.error("오류:", error);
-    }
+
     
     function getInquiry(data) {
         if (data.length === 0) {
@@ -126,6 +104,30 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(listTbody);
 
         $('#listTbody').html(listTbody);
+    }
+
+    function delInquiry() {
+        const delete_btn = document.querySelectorAll('.delete_btn');
+
+        for (const btn of delete_btn) {
+            btn.addEventListener("click",userDeleteHandler);
+
+            function userDeleteHandler(event) {
+                event.preventDefault();
+    
+                console.log('삭제 버튼');
+                console.log(this.name);
+    
+                fetch(`/inquiry/${this.name}`, {
+                    method: 'DELETE',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then((response) => response.json())
+                .then(() => location.reload());
+            }
+        }
     }
 });
 
